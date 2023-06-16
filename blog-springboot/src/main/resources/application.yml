@@ -34,34 +34,35 @@ spring:
     port: 6379
     password:
   # mq配置
-#  rabbitmq:
-#    host: 你的ip
-#    port: 5672
-#    username: rabbitmq用户名
-#    password: rabbitmq密码
-#    listener:
-#      simple:
-#        retry:
-#          enabled: true
-#          max-attempts: 3 #最大重试次数
-#          initial-interval: 3000 #重试间隔时间（单位毫秒）
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3 #最大重试次数
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+
   # es配置 若搜索模式为mysql可删除
-#  elasticsearch:
-#    rest:
-#      uris: 你的IP:9200
+  elasticsearch:
+    rest:
+      uris: localhost:9200
   # 邮箱配置
-#  mail:
-#    host: smtp.qq.com
-#    username: 邮箱用户名
-#    password: 邮箱授权码
-#    default-encoding: UTF-8
-#    port: 587
-#    properties:
-#      mail:
-#      smtp:
-#      auth: true
-#      socketFactory:
-#      class: javax.net.ssl.SSLSocketFactory
+  mail:
+    host: smtp.qq.com
+    username: tiam.yj@qq.com
+    password: ckkajrskpnemdfei
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+      smtp:
+      auth: true
+      socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
   # 上传图片大小限制
   servlet:
     multipart:
@@ -81,40 +82,40 @@ search:
 
 
 # 上传模式 可选 oss或local  （http://和最后的/一定不能去！！！）
-#upload:
-#  mode: local
-#  local:
-#    # nginx映射本地文件路径，无域名则为 ip:83
-#    url: http://你的文件上传子域名/
-#    # 本地文件存储路径
-#    path: /usr/local/upload/
-#  oss:
-#    url: http://Bucket域名/
-#    endpoint: OSS配置endpoint
-#    accessKeyId: OSS配置accessKeyId
-#    accessKeySecret: OSS配置accessKeySecret
-#    bucketName: OSS配置bucketName
-#  cos:
-#    url: http://Bucket域名/
-#    secretId: cos的secretId
-#    secretKey: cos的secretKey
-#    region: cos的region
-#    bucketName: cos的bucketName
+upload:
+  mode: local
+  local:
+    # nginx映射本地文件路径，无域名则为 ip:83
+    url: http://你的文件上传子域名/
+    # 本地文件存储路径
+    path: /usr/local/upload/
+  oss:
+    url: http://Bucket域名/
+    endpoint: OSS配置endpoint
+    accessKeyId: OSS配置accessKeyId
+    accessKeySecret: OSS配置accessKeySecret
+    bucketName: OSS配置bucketName
+  cos:
+    url: http://Bucket域名/
+    secretId: cos的secretId
+    secretKey: cos的secretKey
+    region: cos的region
+    bucketName: cos的bucketName
 
 # 网站前台域名（邮件通知用）
-#website:
-#  url: http://你的主域名或ip
+website:
+  url: https://yujing.fit
 
 #第三方配置信息
-#qq:
-#  app-id: QQ APPID
-#  check-token-url: https://graph.qq.com/oauth2.0/me?access_token={access_token}
-#  user-info-url: https://graph.qq.com/user/get_user_info?openid={openid}&access_token={access_token}&oauth_consumer_key={oauth_consumer_key}
-#
-#weibo:
-#  app-id: 微博APPID
-#  app-secret: 微博APPSECRET
-#  grant-type: authorization_code
-#  redirect-url: 微博回调地址
-#  access-token-url: https://api.weibo.com/oauth2/access_token
-#  user-info-url: https://api.weibo.com/2/users/show.json?uid={uid}&access_token={access_token}
+qq:
+  app-id: QQ APPID
+  check-token-url: https://graph.qq.com/oauth2.0/me?access_token={access_token}
+  user-info-url: https://graph.qq.com/user/get_user_info?openid={openid}&access_token={access_token}&oauth_consumer_key={oauth_consumer_key}
+
+weibo:
+  app-id: 微博APPID
+  app-secret: 微博APPSECRET
+  grant-type: authorization_code
+  redirect-url: 微博回调地址
+  access-token-url: https://api.weibo.com/oauth2/access_token
+  user-info-url: https://api.weibo.com/2/users/show.json?uid={uid}&access_token={access_token}
