@@ -100,7 +100,7 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  background: url(https://static.talkxj.com/config/0w3pdr.jpg) center center /
+  background: url("../../assets/image/pexels-moose-photos-1037996.jpg") center center /
     cover no-repeat;
 }
 .login-card {

@@ -10,9 +10,12 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db4free.net:3306/tiam_blog?serverTimezone=Asia/Shanghai&allowMultiQueries=true
-    username: tiam_bloom
-    password: zxcvbnm.
+#    url: jdbc:mysql://db4free.net:3306/tiam_blog?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+#    username: tiam_bloom
+#    password: zxcvbnm.
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: 123456
     hikari:
       minimum-idle: 5
       # 空闲连接存活最大时间，默认600000（10分钟）
@@ -83,24 +86,24 @@ search:
 
 # 上传模式 可选 oss或local  （http://和最后的/一定不能去！！！）
 upload:
-  mode: local
+  mode: oss
   local:
     # nginx映射本地文件路径，无域名则为 ip:83
     url: http://你的文件上传子域名/
     # 本地文件存储路径
     path: /usr/local/upload/
   oss:
-    url: http://Bucket域名/
-    endpoint: OSS配置endpoint
-    accessKeyId: OSS配置accessKeyId
-    accessKeySecret: OSS配置accessKeySecret
-    bucketName: OSS配置bucketName
+    url: http://static.yujing.fit/
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    accessKeyId: LTAI5tKxidMx71QvsaQpYAej
+    accessKeySecret: 1qn05Z6e9KNOgmUGalfQ0IIGLe77Eh
+    bucketName: thatblog
   cos:
-    url: http://Bucket域名/
+    url: http://qiniu.yujing.fit/
     secretId: cos的secretId
     secretKey: cos的secretKey
-    region: cos的region
-    bucketName: cos的bucketName
+    region: ap-guangzhou
+    bucketName: qiniucloud-tiam
 
 # 网站前台域名（邮件通知用）
 website:

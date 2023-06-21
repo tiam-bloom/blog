@@ -210,6 +210,7 @@ export default {
   width: 120px;
   height: 120px;
   display: block;
+  object-fit: cover;
 }
 .info-container {
   display: flex;
