@@ -12,13 +12,13 @@
         新建页面
       </el-button>
     </div>
-    <!-- 相册列表 -->
+    <!-- 页面列表 -->
     <el-row class="page-container" :gutter="12" v-loading="loading">
       <!-- 空状态 -->
       <el-empty v-if="pageList.length == 0" description="暂无页面" />
       <el-col v-for="item of pageList" :key="item.id" :md="6">
         <div class="page-item">
-          <!-- 相册操作 -->
+          <!-- 页面操作 -->
           <div class="page-opreation">
             <el-dropdown @command="handleCommand">
               <i class="el-icon-more" style="color:#fff" />
@@ -37,7 +37,7 @@
         </div>
       </el-col>
     </el-row>
-    <!-- 新增模态框 -->
+    <!-- 新增/编辑 模态框 -->
     <el-dialog :visible.sync="addOrEdit" width="35%" top="10vh">
       <div class="dialog-title-container" slot="title" ref="pageTitle" />
       <el-form label-width="80px" size="medium" :model="pageForum">
@@ -61,12 +61,7 @@
             <div class="el-upload__text" v-if="pageForum.pageCover == ''">
               将文件拖到此处，或<em>点击上传</em>
             </div>
-            <img
-              v-else
-              :src="pageForum.pageCover"
-              width="360px"
-              height="180px"
-            />
+            <el-image v-else :src="pageForum.pageCover" style="object-fit:cover;width: 360px;height:180px;"></el-image>
           </el-upload>
         </el-form-item>
       </el-form>

@@ -61,6 +61,9 @@ public class PageController {
             if(pageVO.getPageName() == null || pageVO.getPageName().trim().equals("")){
                 return Result.fail("页面名称不能为空");
             }
+            if(pageVO.getPageCover() == null || pageVO.getPageCover().trim().equals("")){
+                return Result.fail("页面封面不能为空");
+            }
         }
         pageService.saveOrUpdatePage(pageVO);
         return Result.ok();
