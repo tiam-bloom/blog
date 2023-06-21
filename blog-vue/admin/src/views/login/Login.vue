@@ -42,8 +42,8 @@ export default {
   data: function() {
     return {
       loginForm: {
-        username: "",
-        password: ""
+        username: "admin@qq.com",
+        password: "123456"
       },
       rules: {
         username: [
