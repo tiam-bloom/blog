@@ -4,7 +4,8 @@ import store from "../../store";
 import axios from "axios";
 import Vue from "vue";
 
-export function generaMenu() {
+// 从后端获取数据生成侧边栏导航
+export function generaMenu(isRefresh = true) {
   // 查询用户菜单
   axios.get("/api/admin/user/menus").then(({ data }) => {
     if (data.flag) {
@@ -23,10 +24,10 @@ export function generaMenu() {
           });
         }
       });
-      // 添加侧边栏菜单
+      // 添加侧边栏菜单, 渲染使用数组
       store.commit("saveUserMenuList", userMenuList);
-      // 添加菜单到路由
-      router.addRoutes(userMenuList);
+      // 添加菜单到路由,刷新页面时不重复添加
+      if(isRefresh) router.addRoutes(userMenuList);
     } else {
       Vue.prototype.$message.error(data.message);
       router.push({ path: "/login" });

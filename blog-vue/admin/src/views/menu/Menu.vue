@@ -67,7 +67,8 @@
             inactive-color="#F4F4F5"
             :active-value="1"
             :inactive-value="0"
-            @change="changeDisable(scope.row)"
+            @change="saveOrUpdateMenu(scope.row)"
+            :disabled="scope.row.id === 16"
           />
         </template>
       </el-table-column>
@@ -166,7 +167,7 @@
         </el-form-item>
         <!-- 显示状态 -->
         <el-form-item label="显示状态">
-          <el-radio-group v-model="menuForm.isHidden">
+          <el-radio-group v-model="menuForm.isHidden" :disabled="menuForm.id == 16">
             <el-radio :label="0">显示</el-radio>
             <el-radio :label="1">隐藏</el-radio>
           </el-radio-group>
@@ -174,7 +175,7 @@
       </el-form>
       <div slot="footer">
         <el-button @click="addMenu = false">取 消</el-button>
-        <el-button type="primary" @click="saveOrUpdateMenu">
+        <el-button type="primary" @click="saveMenu">
           确 定
         </el-button>
       </div>
@@ -183,6 +184,7 @@
 </template>
 
 <script>
+import { generaMenu } from '../../assets/js/menu';
 export default {
   created() {
     this.listMenus();
@@ -275,7 +277,7 @@ export default {
     checkIcon(icon) {
       this.menuForm.icon = icon;
     },
-    saveOrUpdateMenu() {
+    async saveMenu() {
       if (this.menuForm.name.trim() == "") {
         this.$message.error("菜单名不能为空");
         return false;
@@ -292,21 +294,9 @@ export default {
         this.$message.error("菜单访问路径不能为空");
         return false;
       }
-      this.axios.post("/api/admin/menus", this.menuForm).then(({ data }) => {
-        if (data.flag) {
-          this.$notify.success({
-            title: "成功",
-            message: "操作成功"
-          });
-          this.listMenus();
-        } else {
-          this.$notify.error({
-            title: "失败",
-            message: "操作失败"
-          });
-        }
-        this.addMenu = false;
-      });
+      await this.saveOrUpdateMenu(this.menuForm);
+      // 等待菜单保存成功后，关闭弹窗
+      this.addMenu = false;
     },
     deleteMenu(id) {
       this.axios.delete("/api/admin/menus/" + id).then(({ data }) => {
@@ -316,6 +306,7 @@ export default {
             message: "删除成功"
           });
           this.listMenus();
+          generaMenu(false);
         } else {
           this.$notify.error({
             title: "失败",
@@ -323,7 +314,29 @@ export default {
           });
         }
       });
-    }
+    },
+    async saveOrUpdateMenu(menu) {
+      // 禁止关闭本页(菜单管理页)
+
+      // console.log(menu);
+      this.axios.post("/api/admin/menus", menu).then(({ data }) => {
+        if (data.flag) {
+          this.$notify.success({
+            title: "成功",
+            message: data.message
+          });
+          // 重新加载菜单列表
+          this.listMenus();
+          // 重新加载侧边栏导航
+          generaMenu(false);
+        } else {
+          this.$notify.error({
+            title: "失败",
+            message: data.message
+          });
+        }
+      });
+    },
   }
 };
 </script>
