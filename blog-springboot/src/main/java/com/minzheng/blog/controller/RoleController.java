@@ -63,7 +63,16 @@ public class RoleController {
     @OptLog(optType = SAVE_OR_UPDATE)
     @ApiOperation(value = "保存或更新角色")
     @PostMapping("/admin/role")
-    public Result<?> saveOrUpdateRole(@RequestBody @Valid RoleVO roleVO) {
+    public Result<?> saveOrUpdateRole(@RequestBody RoleVO roleVO) {
+        if(roleVO.getId() == null){
+            // 校验参数完整性
+            if(roleVO.getRoleName() == null || roleVO.getRoleName().isEmpty()){
+                return Result.fail("角色名不能为空");
+            }
+            if(roleVO.getRoleLabel() == null || roleVO.getRoleLabel().isEmpty()){
+                return Result.fail("权限标签不能为空");
+            }
+        }
         roleService.saveOrUpdateRole(roleVO);
         return Result.ok();
     }

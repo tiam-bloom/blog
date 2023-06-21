@@ -281,11 +281,13 @@ export default {
     },
     openMenuModel(role) {
       this.$nextTick(function() {
-        this.$refs.menuTree.setCheckedKeys([]);
+        // DOM未更新时可能为undefined, 应使用可选链
+        // 若没此行, 点击不同表格行触发的会是相同的菜单
+        this.$refs.menuTree?.setCheckedKeys([]);
       });
       this.$refs.roleTitle.innerHTML = role ? "修改角色" : "新增角色";
       if (role != null) {
-        this.roleForm = JSON.parse(JSON.stringify(role));
+        this.roleForm = JSON.parse(JSON.stringify(role));  // 转为原生对象, 深拷贝
       } else {
         this.roleForm = {
           roleName: "",
@@ -297,15 +299,23 @@ export default {
       this.roleMenu = true;
     },
     openResourceModel(role) {
-      this.$nextTick(function() {
-        this.$refs.resourceTree.setCheckedKeys([]);
+
+      // 更新DOM后执行回调
+      this.$nextTick(() => {
+        this.$refs.resourceTree?.setCheckedKeys([]);
       });
       this.roleForm = JSON.parse(JSON.stringify(role));
+      // 开启对话框
       this.roleResource = true;
+    },
+    changeDisable(role){
+      // todo: 未完成
+      
     },
     saveOrUpdateRoleResource() {
       this.roleForm.menuIdList = null;
       this.roleForm.resourceIdList = this.$refs.resourceTree.getCheckedKeys();
+
       this.axios.post("/api/admin/role", this.roleForm).then(({ data }) => {
         if (data.flag) {
           this.$notify.success({
