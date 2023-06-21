@@ -52,7 +52,16 @@ public class PageController {
     @OptLog(optType = SAVE_OR_UPDATE)
     @ApiOperation(value = "保存或更新页面")
     @PostMapping("/admin/pages")
-    public Result<?> saveOrUpdatePage(@Valid @RequestBody PageVO pageVO) {
+    public Result<?> saveOrUpdatePage(@RequestBody PageVO pageVO) {
+        // 如果是新增, 效验参数是否完整
+        if (pageVO.getId() == null || pageVO.getId() == 0) {
+            if(pageVO.getPageLabel() == null || pageVO.getPageLabel().trim().equals("")){
+                return Result.fail("页面标签不能为空");
+            }
+            if(pageVO.getPageName() == null || pageVO.getPageName().trim().equals("")){
+                return Result.fail("页面名称不能为空");
+            }
+        }
         pageService.saveOrUpdatePage(pageVO);
         return Result.ok();
     }
